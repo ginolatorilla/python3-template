@@ -15,3 +15,11 @@ Inspired by [Kenneth Reitz's project template](https://github.com/kennethreitz/s
 
 - Python 3.6 or better
 - [Pipenv](https://pipenv.readthedocs.io/en/latest/)
+
+## Quick Start
+
+```bash
+./bootstrap.py
+pipenv run pycodestyle
+pipenv run pytest
+```
