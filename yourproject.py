@@ -8,6 +8,7 @@ Copyright (c) 2019 Gino Latorilla.
 import argparse
 import yourproject.submodule
 
+
 def main():
     program_options = get_program_options()
     x = yourproject.submodule.yourfunction()
