@@ -1,5 +1,7 @@
 # Gino's Python with pipenv project template
 
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ginolatorilla/python3-pipenv-template/Python%20application)
+
 A Python3 project template with pipenv to hande dependencies.
 
 Inspired by [Kenneth Reitz's project template](https://github.com/kennethreitz/samplemod).
