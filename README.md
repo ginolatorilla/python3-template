@@ -10,7 +10,9 @@ Inspired by [Kenneth Reitz's project template](https://github.com/kennethreitz/s
 
 ## Features
 
-- Support for Python 3.6
+- Support for Python 3.6, 3.7, and 3.8
+- Support for Linux, Windows, and MacOS
+- GitHub workflow templates
 - Linting with `pycodestyle` (formerly `pep8`)
 - Test-driven development with PyTest
 - Support for Pipenv with localised `virtualenv` directory
@@ -27,3 +29,10 @@ Inspired by [Kenneth Reitz's project template](https://github.com/kennethreitz/s
 pipenv run pycodestyle
 pipenv run pytest
 ```
+
+Make sure to rename the following files and directories
+
+- `yourproject/**`
+- `tests/yourproject_test.py`
+
+Add modules to be tested in `tests/testables.py`
