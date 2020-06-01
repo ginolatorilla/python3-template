@@ -21,7 +21,9 @@ jobs:
         python-version: ${{matrix.python-version}}
     - uses: dschep/install-pipenv-action@v1
     - name: Install development packages with pipenv
-      run: ./bootstrap.py
+      run: |
+        ./bootstrap.py
+        set PATH=%PATH%;$(pipenv --venv)
     - name: Lint with pycodestyle
       run: |
         pipenv run pycodestyle
@@ -40,7 +42,9 @@ jobs:
         python-version: ${{matrix.python-version}}
     - uses: dschep/install-pipenv-action@v1
     - name: Install development packages with pipenv
-      run: ./bootstrap.py
+      run: |
+        ./bootstrap.py
+        set PATH=%PATH%;$(pipenv --venv)
     - name: Test with pytest
       run: |
         pipenv run pytest
