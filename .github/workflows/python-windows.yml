@@ -23,9 +23,10 @@ jobs:
     - name: Install development packages with pipenv
       run: |
         ./bootstrap.py
-        set PATH=%PATH%;$(pipenv --venv)
     - name: Lint with pycodestyle
       run: |
+        pipenv --three
+        set PATH=%PATH%;$(pipenv --venv)
         pipenv run pycodestyle
 
   test:
@@ -44,7 +45,8 @@ jobs:
     - name: Install development packages with pipenv
       run: |
         ./bootstrap.py
-        set PATH=%PATH%;$(pipenv --venv)
     - name: Test with pytest
       run: |
+        pipenv --three
+        set PATH=%PATH%;$(pipenv --venv)
         pipenv run pytest
