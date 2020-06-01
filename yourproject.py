@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
-'''Describe in this sentence what this program does.
+"""
+Describe in this sentence what this program does.
 
-Copyright (c) 2019 Gino Latorilla.
-'''
+Copyright (c) 2019 Gino Latorilla. All rights reserved.
+"""
 
 import argparse
 import yourproject.submodule
