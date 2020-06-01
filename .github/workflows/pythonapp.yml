@@ -2,16 +2,13 @@ name: Python application
 
 on: [push, pull_request]
 
-.matrix-strategy-across-python3-versions: &matrix-strategy-across-python3-versions
-  strategy:
-    matrix:
-      python-version: ['3.6', '3.7', '3.8']
-
 jobs:
   test:
-    <<: [*matrix-strategy-across-python3-versions]
     name: Test on Python ${{matrix.python-version}}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.6', '3.7', '3.8']
     steps:
     - uses: actions/checkout@v1
     - name: Set up Python
