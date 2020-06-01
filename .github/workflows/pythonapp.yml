@@ -16,6 +16,8 @@ jobs:
       with:
         python-version: ${{matrix.python-version}}
     - uses: dschep/install-pipenv-action@v1
+    - name: Install development packages with pipenv
+      run: ./bootstrap.py
     - name: Lint with pycodestyle
       run: |
         pipenv run pycodestyle
