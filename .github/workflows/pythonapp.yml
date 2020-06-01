@@ -15,11 +15,7 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: ${{matrix.python-version}}
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pipenv
-        ./bootstrap.py
+    - uses: dschep/install-pipenv-action@v1
     - name: Lint with pycodestyle
       run: |
         pipenv run pycodestyle
