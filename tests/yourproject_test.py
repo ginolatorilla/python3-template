@@ -3,8 +3,14 @@ Copyright (c) 2019 Gino Latorilla. All rights reserved.
 """
 
 import pytest
-from .testables import yourproject
+import yourproject
+import submodule
+import submodule.main
+
+
+def test_yourproject_main():
+    assert yourproject.main() == 0
 
 
 def test_yourfunction():
-    assert(0 == yourproject.submodule.yourfunction())
+    assert submodule.main.yourfunction() == 0
