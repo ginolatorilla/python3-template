@@ -40,7 +40,9 @@ jobs:
         python-version: ${{matrix.python-version}}
     - uses: dschep/install-pipenv-action@v1
     - name: Install development packages with pipenv
-      run: python ./bootstrap.py
+      run: |
+        python ./bootstrap.py
+        pipenv install --dev pytest
     - name: Test with pytest
       run: |
         pipenv run pytest
