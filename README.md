@@ -25,7 +25,7 @@ Inspired by [Kenneth Reitz's project template](https://github.com/kennethreitz/s
 ## Quick Start
 
 ```bash
-./bootstrap.py
+python3 ./bootstrap.py
 pipenv run pycodestyle
 pipenv run pytest
 ```
@@ -36,3 +36,6 @@ Make sure to rename the following files and directories
 - `tests/yourproject_test.py`
 
 Add modules to be tested in `tests/testables.py`
+
+This project can be installed to your system or virtual environments via `pip install .` or `./setup.py install`.
+To know more, see the [setuptools documentation](https://setuptools.readthedocs.io/en/latest/userguide/index.html).
