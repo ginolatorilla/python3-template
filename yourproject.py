@@ -7,6 +7,7 @@ Copyright (c) 2021 Your Company's Name, or you
 import logging
 import submodule.main
 
+
 def main(required, *, optional=None):
     logging.info(f'Hey, I got {required}.')
     if optional:

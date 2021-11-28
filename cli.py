@@ -30,7 +30,7 @@ def main():
     # But if you want a CLI app with subcommands that look like 'git', then delete this function
     # and rename the function 'main_with_subcommands' to 'main', or do it the easy way
     # by uncommenting the following line:
-    #return main_with_subcommands()
+    # return main_with_subcommands()
     # Then, you can safely remove these functions: make_cl_argument_parse
     #
     parser = make_cl_argument_parser()
