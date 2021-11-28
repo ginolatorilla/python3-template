@@ -1,7 +1,12 @@
 name: python-linux
 
 on: [push, pull_request]
-
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
 jobs:
   style-check:
     name: Check PEP8 compliance on Python ${{matrix.python-version}}
