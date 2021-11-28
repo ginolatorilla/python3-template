@@ -7,12 +7,14 @@ If you think there's no need to describe this in detail, just remove this line a
 Copyright (c) 2021 Your Company's Name, or you
 '''
 import sys
+from pathlib import Path
 import logging
 import argparse
 
 import yourproject
 
-log = logging.getLogger(sys.argv[0])
+APP_NAME = Path(sys.argv[0]).stem
+log = logging.getLogger(APP_NAME)
 
 
 def main():
