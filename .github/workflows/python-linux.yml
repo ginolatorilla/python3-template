@@ -1,6 +1,6 @@
 name: python-linux
 
-on: [push, pull_request]
+on:
   push:
     branches:
     - main

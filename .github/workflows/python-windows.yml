@@ -1,6 +1,12 @@
 name: python-windows
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
 
 defaults:
   run:
