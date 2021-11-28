@@ -16,6 +16,7 @@ Inspired by [Kenneth Reitz's project template](https://github.com/kennethreitz/s
 - Linting with `pycodestyle` (formerly `pep8`)
 - Test-driven development with PyTest
 - Support for Pipenv with localised `virtualenv` directory
+- Ready-made template for CLI apps with argument parsing, subcommands, logging, and console colouring.
 
 ## Requirements
 
@@ -32,10 +33,20 @@ pipenv run pytest
 
 Make sure to rename the following files and directories
 
-- `yourproject/**`
-- `tests/yourproject_test.py`
+- `submodule/**`
+- `tests/**`
+- `yourproject.py`
 
-Add modules to be tested in `tests/testables.py`
+Follow all of the TODOs embedded in these files:
+
+- All `*.py` files.
+- `setup.cfg`
+
+Consider changing the project licence with yours, and adjust the licencing metadata in `setup.cfg`.
 
 This project can be installed to your system or virtual environments via `pip install .` or `./setup.py install`.
 To know more, see the [setuptools documentation](https://setuptools.readthedocs.io/en/latest/userguide/index.html).
+
+This project supports an optional feature for coloured console outputs with this install command: `pip install .[pretty]`.
+
+Finally, take ownership of this template project and replace this README!
