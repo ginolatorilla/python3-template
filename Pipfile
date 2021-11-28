@@ -7,7 +7,7 @@ verify_ssl = true
 pytest = "*"
 pycodestyle = "*"
 yapf = "*"
-yourproject = {editable = true, path = "."}
+yourproject = {editable = true, extras = ["pretty"], path = "."}
 
 [packages]
 

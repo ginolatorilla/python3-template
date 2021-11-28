@@ -11,6 +11,12 @@ from pathlib import Path
 import logging
 import argparse
 
+try:
+    from rich.logging import RichHandler
+    PRETTY_FEATURE_ON = True
+except ImportError:
+    PRETTY_FEATURE_ON = False
+
 import yourproject
 
 APP_NAME = Path(sys.argv[0]).stem
@@ -19,11 +25,17 @@ log = logging.getLogger(APP_NAME)
 
 def main():
     # TODO: If you want a simple CLI app, use this function.
+    # You can safely remove these functions: main_with_subcommands, make_cl_subcommand_parser, subcommand_main
+    #
     # But if you want a CLI app with subcommands that look like 'git', then delete this function
-    # and rename the function 'main_with_subcommands' to 'main'.
+    # and rename the function 'main_with_subcommands' to 'main', or do it the easy way
+    # by uncommenting the following line:
+    #return main_with_subcommands()
+    # Then, you can safely remove these functions: make_cl_argument_parse
+    #
     parser = make_cl_argument_parser()
     program_options = parser.parse_args()
-    setup_logger(program_options.verbosity)
+    setup_logger(program_options.verbosity, program_options.no_color)
 
     # TODO: Continue here, and use program_options.
     yourproject.main(program_options.required, optional=program_options.optional)
@@ -61,7 +73,14 @@ def make_cl_argument_parser():
             'action': 'count',
             'default': 0,
             'dest': 'verbosity'
-        }
+        },
+        (
+            '--no-color',
+            '--no-colour',
+        ): {
+            'help': 'Disable colouring of console output.',
+            'action': 'store_true'
+        },
     }
 
     _ = argparse.ArgumentParser(
@@ -78,8 +97,9 @@ def make_cl_argument_parser():
     return _
 
 
-def setup_logger(verbosity):
+def setup_logger(verbosity, no_colour):
     assert verbosity >= 0
+    pretty = PRETTY_FEATURE_ON and not no_colour
 
     log_levels = {
         0: {
@@ -104,15 +124,32 @@ def setup_logger(verbosity):
               'local': logging.DEBUG
           })
 
-    log_format = {
-        0: '[{levelname}] {name}: {message}',
-        1: '[{levelname}] {name}: {message}',
-        2: '<{asctime}> [{levelname}] {name}: {message}',
-        3: '<{asctime}> [{levelname}] [pid={process}] {name}: {message}',
-    }.get(verbosity,
-          '<{asctime}> [{levelname}] [pid={process} [tid={thread}] {name}({pathname}:{lineno}): {message}')
+    if pretty:
+        log_format = {
+            0: '{name}: {message}',
+            1: '{name}: {message}',
+            2: '{name}: {message}',
+            3: '[pid={process}] {name}: {message}',
+        }.get(verbosity,
+              '[pid={process}] [tid={thread}] {name}({pathname}:{lineno}): {message}')
+    else:
+        log_format = {
+            0: '[{levelname}] {name}: {message}',
+            1: '[{levelname}] {name}: {message}',
+            2: '<{asctime}> [{levelname}] {name}: {message}',
+            3: '<{asctime}> [{levelname}] [pid={process}] {name}: {message}',
+        }.get(
+            verbosity,
+            '<{asctime}> [{levelname}] [pid={process}] [tid={thread}] {name}({pathname}:{lineno}): {message}'
+        )
 
-    logging.basicConfig(level=log_levels['global'], style='{', format=log_format)
+    logging.basicConfig(
+        level=log_levels['global'],
+        style='{',
+        format=log_format,
+        handlers=[RichHandler(rich_tracebacks=True,
+                              show_path=False)] if pretty else [logging.StreamHandler()]
+    )
     log.setLevel(log_levels['local'])
     log.debug(f'Log level is {verbosity}.')
 
@@ -120,8 +157,9 @@ def setup_logger(verbosity):
 def main_with_subcommands():
     parser = make_cl_subcommand_parser()
     program_options = parser.parse_args()
-    if 'verbosity' in program_options:
-        setup_logger(program_options.verbosity)
+    print(vars(program_options))
+    if all(_ in program_options for _ in {'verbosity', 'no_color'}):
+        setup_logger(program_options.verbosity, program_options.no_color)
 
     return program_options.func(program_options)
 
@@ -139,7 +177,14 @@ def make_cl_subcommand_parser():
             'action': 'count',
             'default': 0,
             'dest': 'verbosity'
-        }
+        },
+        (
+            '--no-color',
+            '--no-colour',
+        ): {
+            'help': 'Disable colouring of console output.',
+            'action': 'store_true'
+        },
     }
 
     # TODO: Add/remove subcommands here.
@@ -195,4 +240,5 @@ def make_cl_subcommand_parser():
 
 
 def subcommand_main(options):
+    log.debug("heyyyyy")
     return 0
