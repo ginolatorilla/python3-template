@@ -1,27 +1,15 @@
-#!/usr/bin/env python3
+'''This module has some stuff in it.
+This module can do this and that, and many many more.
+If you think there's no need to describe this in detail, just remove this line and the one before.
 
-"""
-Describe in this sentence what this program does.
-
-Copyright (c) 2019 Gino Latorilla. All rights reserved.
-"""
-
-import argparse
+Copyright (c) 2021 Your Company's Name, or you
+'''
+import logging
 import submodule.main
 
+def main(required, *, optional=None):
+    logging.info(f'Hey, I got {required}.')
+    if optional:
+        logging.info(f'Hey, I also got {optional}.')
 
-def main():
-    program_options = get_program_options()
-    x = submodule.main.yourfunction()
-    # Continue here
-
-    return x
-
-
-def get_program_options():
-    parser = argparse.ArgumentParser(description=__doc__)
-    return parser.parse_args()
-
-
-if __name__ == '__main__':
-    main()
+    submodule.main.yourfunction()
