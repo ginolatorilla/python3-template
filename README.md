@@ -10,8 +10,8 @@ Inspired by [Kenneth Reitz's project template](https://github.com/kennethreitz/s
 
 ## Features
 
-- Support for Python 3.6, 3.7, and 3.8
-- Support for Linux, Windows, and MacOS
+- Support for Python 3.6, up to 3.10
+- Support for Linux, Windows, and MacOS (no support for 3.6 in MacOS)
 - GitHub workflow templates
 - Linting with `pycodestyle` (formerly `pep8`)
 - Test-driven development with PyTest
