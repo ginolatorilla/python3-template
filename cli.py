@@ -105,7 +105,3 @@ def setup_logger(verbosity):
     logging.basicConfig(level=log_levels['global'], style='{', format=log_format)
     log.setLevel(log_levels['local'])
     log.debug(f'Log level is {verbosity}.')
-
-
-if __name__ == '__main__':
-    sys.exit(main())
