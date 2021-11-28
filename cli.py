@@ -59,10 +59,15 @@ def make_cl_argument_parser():
         }
     }
 
-    class Formatter(argparse.RawDescriptionHelpFormatter, argparse.ArgumentDefaultsHelpFormatter):
-        pass
-
-    _ = argparse.ArgumentParser(description=__doc__, formatter_class=Formatter)
+    _ = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=type(
+            'Formatter',
+            (argparse.RawDescriptionHelpFormatter,
+             argparse.ArgumentDefaultsHelpFormatter),
+            {}
+        )
+    )
     for args, kwargs in arguments_spec.items():
         _.add_argument(*args, **kwargs)
     return _
