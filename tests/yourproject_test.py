@@ -11,7 +11,7 @@ import submodule.main
 
 
 def test_yourproject_main():
-    assert yourproject.main() == 0
+    assert yourproject.main(None) == None
 
 
 def test_yourfunction():
