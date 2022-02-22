@@ -10,9 +10,10 @@ import sys
 from pathlib import Path
 import logging
 import argparse
+from typing import Dict, Tuple, Any
 
 try:
-    from rich.logging import RichHandler
+    from rich.logging import RichHandler  # type: ignore
     PRETTY_FEATURE_ON = True
 except ImportError:
     PRETTY_FEATURE_ON = False
@@ -23,7 +24,7 @@ APP_NAME = Path(sys.argv[0]).stem
 log = logging.getLogger(APP_NAME)
 
 
-def main():
+def main() -> int:
     # TODO: If you want a simple CLI app, use this function.
     # You can safely remove these functions: main_with_subcommands, make_cl_subcommand_parser, subcommand_main
     #
@@ -42,13 +43,12 @@ def main():
     return 0
 
 
-def make_cl_argument_parser():
+def make_cl_argument_parser() -> argparse.ArgumentParser:
     # TODO: Add/remove command line arguments in this dictionary.
     # The 'keys' are positional arguments to argparse.ArgumentParser.add_argument and
     # the 'values' are the keyword arguments.
     arguments_spec = {
-        ('required',
-         ): {
+        ('required', ): {
             'help': 'This is a required argument.'
         },
         (
@@ -81,23 +81,18 @@ def make_cl_argument_parser():
             'help': 'Disable colouring of console output.',
             'action': 'store_true'
         },
-    }
+    }  # type: Dict[Tuple[str, ...], Any]
 
-    _ = argparse.ArgumentParser(
+    ap = argparse.ArgumentParser(
         description=__doc__,
-        formatter_class=type(
-            'Formatter',
-            (argparse.RawDescriptionHelpFormatter,
-             argparse.ArgumentDefaultsHelpFormatter),
-            {}
-        )
-    )
+        formatter_class=type('Formatter',
+                             (argparse.RawDescriptionHelpFormatter, argparse.ArgumentDefaultsHelpFormatter), {}))
     for args, kwargs in arguments_spec.items():
-        _.add_argument(*args, **kwargs)
-    return _
+        ap.add_argument(*args, **kwargs)
+    return ap
 
 
-def setup_logger(verbosity, no_colour):
+def setup_logger(verbosity: int, no_colour: bool) -> None:
     assert verbosity >= 0
     pretty = PRETTY_FEATURE_ON and not no_colour
 
@@ -118,11 +113,10 @@ def setup_logger(verbosity, no_colour):
             'global': logging.INFO,
             'local': logging.DEBUG
         },
-    }.get(verbosity,
-          {
-              'global': logging.DEBUG,
-              'local': logging.DEBUG
-          })
+    }.get(verbosity, {
+        'global': logging.DEBUG,
+        'local': logging.DEBUG
+    })
 
     if pretty:
         log_format = {
@@ -130,41 +124,35 @@ def setup_logger(verbosity, no_colour):
             1: '{name}: {message}',
             2: '{name}: {message}',
             3: '[pid={process}] {name}: {message}',
-        }.get(verbosity,
-              '[pid={process}] [tid={thread}] {name}({pathname}:{lineno}): {message}')
+        }.get(verbosity, '[pid={process}] [tid={thread}] {name}({pathname}:{lineno}): {message}')
     else:
         log_format = {
             0: '[{levelname}] {name}: {message}',
             1: '[{levelname}] {name}: {message}',
             2: '<{asctime}> [{levelname}] {name}: {message}',
             3: '<{asctime}> [{levelname}] [pid={process}] {name}: {message}',
-        }.get(
-            verbosity,
-            '<{asctime}> [{levelname}] [pid={process}] [tid={thread}] {name}({pathname}:{lineno}): {message}'
-        )
+        }.get(verbosity,
+              '<{asctime}> [{levelname}] [pid={process}] [tid={thread}] {name}({pathname}:{lineno}): {message}')
 
     logging.basicConfig(
         level=log_levels['global'],
         style='{',
         format=log_format,
-        handlers=[RichHandler(rich_tracebacks=True,
-                              show_path=False)] if pretty else [logging.StreamHandler()]
-    )
+        handlers=[RichHandler(rich_tracebacks=True, show_path=False)] if pretty else [logging.StreamHandler()])
     log.setLevel(log_levels['local'])
     log.debug(f'Log level is {verbosity}.')
 
 
-def main_with_subcommands():
+def main_with_subcommands() -> Any:
     parser = make_cl_subcommand_parser()
     program_options = parser.parse_args()
-    print(vars(program_options))
     if all(_ in program_options for _ in {'verbosity', 'no_color'}):
         setup_logger(program_options.verbosity, program_options.no_color)
 
     return program_options.func(program_options)
 
 
-def make_cl_subcommand_parser():
+def make_cl_subcommand_parser() -> argparse.ArgumentParser:
     # TODO: Add/remove command line arguments in this dictionary.
     # The 'keys' are positional arguments to argparse.ArgumentParser.add_argument and
     # the 'values' are the keyword arguments.
@@ -185,7 +173,7 @@ def make_cl_subcommand_parser():
             'help': 'Disable colouring of console output.',
             'action': 'store_true'
         },
-    }
+    }  # type: Dict[Tuple[str, ...], Any]
 
     # TODO: Add/remove subcommands here.
     # The 'keys' are positional arguments to argparse.ArgumentParser.add_subparsers and
@@ -194,8 +182,7 @@ def make_cl_subcommand_parser():
         'subcommand': {
             'description': 'This subcommand does this.',
             'arguments_spec': {
-                ('required',
-                 ): {
+                ('required', ): {
                     'help': 'This is a required argument.'
                 },
                 (
@@ -215,17 +202,12 @@ def make_cl_subcommand_parser():
             },
             'entry_point': subcommand_main
         }
-    }
+    }  # type: Dict[str, Dict[str, Any]]
 
     root_parser = argparse.ArgumentParser(
         description=__doc__,
-        formatter_class=type(
-            'Formatter',
-            (argparse.RawDescriptionHelpFormatter,
-             argparse.ArgumentDefaultsHelpFormatter),
-            {}
-        )
-    )
+        formatter_class=type('Formatter',
+                             (argparse.RawDescriptionHelpFormatter, argparse.ArgumentDefaultsHelpFormatter), {}))
     root_parser.set_defaults(func=lambda _: root_parser.print_help())
 
     subparsers = root_parser.add_subparsers(description='', dest='subcommand')
@@ -239,6 +221,6 @@ def make_cl_subcommand_parser():
     return root_parser
 
 
-def subcommand_main(options):
+def subcommand_main(options: argparse.Namespace) -> int:
     log.debug("heyyyyy")
     return 0
