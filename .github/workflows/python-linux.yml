@@ -20,7 +20,8 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{matrix.python-version}}
-    - uses: dschep/install-pipenv-action@v1
+    - name: Install PipEnv
+      run: pip install pipenv
     - name: Install development packages with pipenv
       run: ./bootstrap.py
     - name: Lint with flake8
@@ -39,7 +40,8 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{matrix.python-version}}
-    - uses: dschep/install-pipenv-action@v1
+    - name: Install PipEnv
+      run: pip install pipenv
     - name: Install development packages with pipenv
       run: ./bootstrap.py
     - name: Test with pytest
