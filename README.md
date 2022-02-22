@@ -13,10 +13,11 @@ Inspired by [Kenneth Reitz's project template](https://github.com/kennethreitz/s
 - Support for Python 3.6, up to 3.10
 - Support for Linux, Windows, and MacOS (no support for 3.6 in MacOS)
 - GitHub workflow templates
-- Linting with `pycodestyle` (formerly `pep8`)
-- Test-driven development with PyTest
+- Linting with `flake8` and `mypy`
+- Formatting with `yapf`
+- Test-driven development with PyTest, with mocking and code coverage support
 - Support for Pipenv with localised `virtualenv` directory
-- Ready-made template for CLI apps with argument parsing, subcommands, logging, and console colouring.
+- Ready-made template for CLI apps with argument parsing, subcommands, logging, and console colouring
 
 ## Requirements
 
@@ -27,7 +28,8 @@ Inspired by [Kenneth Reitz's project template](https://github.com/kennethreitz/s
 
 ```bash
 python3 ./bootstrap.py
-pipenv run pycodestyle
+pipenv run flake8
+pipenv run mypy
 pipenv run pytest
 ```
 
