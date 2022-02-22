@@ -5,9 +5,12 @@ verify_ssl = true
 
 [dev-packages]
 pytest = "*"
-pycodestyle = "*"
 yapf = "*"
 yourproject = {editable = true, extras = ["pretty"], path = "."}
+pytest-cov = "*"
+pytest-mock = "*"
+mypy = "*"
+flake8 = "*"
 
 [packages]
 
