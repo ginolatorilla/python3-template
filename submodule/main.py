@@ -6,5 +6,5 @@ Copyright (c) 2021 Your Company's Name, or you
 '''
 
 
-def yourfunction():
+def yourfunction() -> int:
     return 0

@@ -4,15 +4,14 @@ If you think there's no need to describe this in detail, just remove this line, 
 Copyright (c) 2021 Your Company's Name, or you
 '''
 
-import pytest
 import yourproject
 import submodule
 import submodule.main
 
 
-def test_yourproject_main():
-    assert yourproject.main(None) is None
+def test_yourproject_main() -> None:
+    yourproject.main(1)
 
 
-def test_yourfunction():
+def test_yourfunction() -> None:
     assert submodule.main.yourfunction() == 0

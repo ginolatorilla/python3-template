@@ -9,7 +9,7 @@ on:
     - main
 jobs:
   style-check:
-    name: Check PEP8 compliance on Python ${{matrix.python-version}}
+    name: Check PEP8 and PEP484 compliance on Python ${{matrix.python-version}}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -17,15 +17,17 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Set up Python
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v2
       with:
         python-version: ${{matrix.python-version}}
-    - uses: dschep/install-pipenv-action@v1
+    - name: Install PipEnv
+      run: pip install pipenv
     - name: Install development packages with pipenv
       run: ./bootstrap.py
-    - name: Lint with pycodestyle
+    - name: Lint with flake8 and mypy
       run: |
-        pipenv run pycodestyle
+        pipenv run flake8
+        pipenv run mypy .
 
   test:
     name: Test on Python ${{matrix.python-version}} with PyTest
@@ -36,10 +38,11 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Set up Python
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v2
       with:
         python-version: ${{matrix.python-version}}
-    - uses: dschep/install-pipenv-action@v1
+    - name: Install PipEnv
+      run: pip install pipenv
     - name: Install development packages with pipenv
       run: ./bootstrap.py
     - name: Test with pytest
