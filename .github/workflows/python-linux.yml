@@ -27,7 +27,7 @@ jobs:
     - name: Lint with flake8 and mypy
       run: |
         pipenv run flake8
-        pipenv run mypy
+        pipenv run mypy .
 
   test:
     name: Test on Python ${{matrix.python-version}} with PyTest
