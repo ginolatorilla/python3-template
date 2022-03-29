@@ -78,7 +78,7 @@ def main() -> int:
     env['PIPENV_VENV_IN_PROJECT'] = '1'
     subprocess.run(shlex.split('pipenv --python 3 --three'), env=env, cwd=new_project_root)
     subprocess.run(shlex.split('pipenv uninstall yourproject'), env=env, cwd=new_project_root)
-    if program_options.colour:
+    if program_options.color:
         subprocess.run(shlex.split('pipenv install --editable .[pretty] --dev'), env=env, cwd=new_project_root)
     else:
         subprocess.run(shlex.split('pipenv install --editable . --dev'), env=env, cwd=new_project_root)
@@ -132,9 +132,9 @@ class ProgramOptions:
             }
         })
 
-    colour: str = field(
+    color: bool = field(
         metadata={
-            'flags': {'-c', '--color'},
+            'flags': {'-c'},
             'add_argument_kwargs': {
                 'help': 'Enable rich text formatting support in the cli.'
                 '"package": The project will be a package (a directory with __init__.py)',
