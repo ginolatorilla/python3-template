@@ -46,6 +46,9 @@ def main() -> int:
     for path in staging_directory.glob('.git'):
         path.unlink() if path.is_file() else shutil.rmtree(path)
 
+    log.debug('Removing the copy of this bootstrapping script.')
+    (staging_directory / 'bootstrap.py').unlink()
+
     if program_options.layout == 'module':
         log.debug('Removing the package directory because you chose "module" as the project layout.')
         shutil.rmtree(staging_directory / 'submodule')
