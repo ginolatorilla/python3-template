@@ -18,6 +18,7 @@ Inspired by [Kenneth Reitz's project template](https://github.com/kennethreitz/s
 - Test-driven development with PyTest, with mocking and code coverage support
 - Support for Pipenv with localised `virtualenv` directory
 - Ready-made template for CLI apps with argument parsing, subcommands, logging, and console colouring
+- Optional colour support for CLI with `[pretty]` flag.
 
 ## Requirements
 
@@ -27,19 +28,11 @@ Inspired by [Kenneth Reitz's project template](https://github.com/kennethreitz/s
 ## Quick Start
 
 ```bash
-python3 ./bootstrap.py
-pipenv run flake8
-pipenv run mypy
-pipenv run pytest
+python3 ./bootstrap.py your_new_project_name
 ```
 
-Make sure to rename the following files and directories
-
-- `submodule/**`
-- `tests/**`
-- `yourproject.py`
-
-Follow all of the TODOs embedded in these files:
+The bootstrapping script will create your new project's root directory. Follow all of the TODOs
+embedded in the newly-created files:
 
 - All `*.py` files.
 - `setup.cfg`
