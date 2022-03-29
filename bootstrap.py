@@ -30,13 +30,14 @@ def main() -> int:
 
     new_project_root = Path(program_options.destination) / program_options.project
     if new_project_root.exists():
-        log.error(f'The project destination directory exists: {new_project_root}.')
+        log.error(f'The project destination directory exists: {new_project_root.absolute()}.')
         return 1
 
+    log.info(f'Preparing new project root directory in: {new_project_root.absolute()}')
     staging_directory = Path(mkdtemp())
-    log.debug(f'We have created a temporary staging directory here: {staging_directory}')
+    log.debug(f'We have created a temporary staging directory here: {staging_directory.absolute()}')
 
-    log.debug(f'Copying project tree to: {staging_directory}')
+    log.debug(f'Copying project tree to: {staging_directory.absolute()}')
     shutil.copytree(src=Path(__file__).parent, dst=staging_directory, dirs_exist_ok=True)
 
     log.debug('Removing files that are ignored or not tracked by Git.')
@@ -69,9 +70,11 @@ def main() -> int:
         fp.write(setup_config_template.safe_substitute(project_name=program_options.project))
         fp.truncate()
 
-    log.debug(f'Moving staging directory to destination: {new_project_root}')
+    log.debug(f'Moving staging directory to destination: {new_project_root.absolute()}')
     new_project_root.mkdir(parents=True, exist_ok=True)
     staging_directory.rename(new_project_root)
+
+    log.info('Re-initialising project directory: virtual environment and Git')
 
     log.debug('Creating virtual environment with Pipenv.')
     env = os.environ.copy()
@@ -90,6 +93,13 @@ def main() -> int:
 
     log.debug('Re-initialising Git repository')
     subprocess.run(shlex.split(f'git -C {new_project_root} init'))
+
+    log.info(f'Congratulations, you may now work in your new project at: {new_project_root.absolute()}')
+    log.info('Make sure to do the following afterwards:')
+    log.info('  1. Update docstrings in every new *.py file.')
+    log.info('  2. Update all "# TODO" bits in setup.cfg.')
+    log.info('  3. Change LICENSE, if necessary.')
+    log.info('  4. Update the README.md.')
     return 0
 
 
