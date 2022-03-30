@@ -33,6 +33,10 @@ def main() -> int:
         log.error(f'The project destination directory exists: {new_project_root.absolute()}.')
         return 1
 
+    if os.getenv('VIRTUAL_ENV') is not None:
+        log.error('Cannot continue while inside an active Virtual Environment. Did you forget to call "deactivate"?')
+        return 1
+
     log.info(f'Preparing new project root directory in: {new_project_root.absolute()}')
     staging_directory = Path(mkdtemp())
     log.debug(f'We have created a temporary staging directory here: {staging_directory.absolute()}')
