@@ -10,18 +10,17 @@ import shlex
 import shutil
 import subprocess
 import sys
-from dataclasses import Field, dataclass, field, fields
 from pathlib import Path
 from string import Template
 from tempfile import mkdtemp
-from typing import Any, Tuple, Type
+from typing import Any, Dict, Tuple
 
 APP_NAME = Path(sys.argv[0]).stem
 log = logging.getLogger(APP_NAME)
 
 
 def main() -> int:
-    program_options = ProgramOptions.parse_args()
+    program_options = make_cl_argument_parser().parse_args()
     setup_logger(program_options.verbosity)
 
     if not program_options.project.isidentifier():
@@ -107,80 +106,41 @@ def main() -> int:
     return 0
 
 
-@dataclass
-class ProgramOptions:
-    project: str = field(metadata={
-        'positional': True,
-        'add_argument_kwargs': {
+def make_cl_argument_parser() -> argparse.ArgumentParser:
+    arguments_spec = {
+        ('project', ): {
             'help': 'The name of your project.'
         },
-    })
+        ('-d', '--destination'): {
+            'help': 'Create project root in this directory. ',
+            'default': str(Path('.').absolute()),
+        },
+        ('-v', '--verbose'): {
+            'help': 'Increase logging verbosity. Can be specified multiple times.',
+            'action': 'count',
+            'default': 0,
+            'dest': 'verbosity'
+        },
+        ('-l', '--layout'): {
+            'help': '"module": The project will be a single Python module. '
+            '"package": The project will be a package (a directory with __init__.py)',
+            'choices': {'module', 'package'},
+            'default': 'module'
+        },
+        ('-c', '--color', '--colour'): {
+            'help': 'Enable rich text formatting support in the cli.'
+            '"package": The project will be a package (a directory with __init__.py)',
+            'action': 'store_true',
+        },
+    }  # type: Dict[Tuple[str, ...], Any]
 
-    destination: str = field(
-        metadata={
-            'flags': {'-d'},
-            'add_argument_kwargs': {
-                'help': 'Create project root in this directory. ',
-                'default': str(Path('.').absolute()),
-            }
-        })
-
-    verbosity: int = field(
-        metadata={
-            'flags': {'-v'},
-            'add_argument_kwargs': {
-                'help': 'Increase logging verbosity. Can be specified multiple times.',
-                'action': 'count',
-                'default': 0,
-                'dest': 'verbosity'
-            }
-        })
-
-    layout: str = field(
-        metadata={
-            'add_argument_kwargs': {
-                'help': '"module": The project will be a single Python module. '
-                '"package": The project will be a package (a directory with __init__.py)',
-                'choices': {'module', 'package'},
-                'default': 'module'
-            }
-        })
-
-    color: bool = field(
-        metadata={
-            'flags': {'-c'},
-            'add_argument_kwargs': {
-                'help': 'Enable rich text formatting support in the cli.'
-                '"package": The project will be a package (a directory with __init__.py)',
-                'action': 'store_true',
-            }
-        })
-
-    @classmethod
-    def make_cl_argument_parser(cls) -> argparse.ArgumentParser:
-        def args_from_field_metadata(field: Field) -> Tuple[Any, ...]:  # type: ignore
-            if field.metadata.get('positional'):
-                return (field.name, )
-            else:
-                return (*field.metadata.get('flags', {}), f'--{field.name}')
-
-        arguments_spec = {
-            args_from_field_metadata(field): field.metadata['add_argument_kwargs']
-            for field in fields(cls)
-        }
-
-        ap = argparse.ArgumentParser(description=__doc__,
-                                     formatter_class=type('Formatter', (
-                                         argparse.RawDescriptionHelpFormatter,
-                                         argparse.ArgumentDefaultsHelpFormatter,
-                                     ), {}))
-        for args, kwargs in arguments_spec.items():
-            ap.add_argument(*args, **kwargs)
-        return ap
-
-    @classmethod
-    def parse_args(cls) -> Type['ProgramOptions']:
-        return cls.make_cl_argument_parser().parse_args(namespace=cls)
+    ap = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=type('Formatter',
+                             (argparse.RawDescriptionHelpFormatter, argparse.ArgumentDefaultsHelpFormatter), {}))
+    for args, kwargs in arguments_spec.items():
+        ap.add_argument(*args, **kwargs)
+    return ap
 
 
 def setup_logger(verbosity: int) -> None:
