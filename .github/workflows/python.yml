@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+env:
+  PIPENV_VENV_IN_PROJECT: 1
+
 jobs:
   style-check:
     name: Lint on Python ${{matrix.python-version}} @${{matrix.os-image}}
