@@ -58,7 +58,8 @@ def main() -> int:
             return 1
 
         if os.getenv('VIRTUAL_ENV') is not None:
-            log.error('Cannot continue while inside an active Virtual Environment. Did you forget to call "deactivate"?')
+            log.error(
+                'Cannot continue while inside an active Virtual Environment. Did you forget to call "deactivate"?')
             return 1
 
         log.info(f'Preparing new project root directory in: {new_project_root.absolute()}')
@@ -91,16 +92,22 @@ def main() -> int:
             log.debug(f'Renaming the package directory to {program_options.project}/.')
             (staging_directory / 'submodule').rename(staging_directory / f'{program_options.project}')
 
-        log.debug('Substituting project name in setup.cfg.')
-
         log.debug('Generating setup.cfg.')
         with open(staging_directory / 'setup.cfg.template', 'r') as fp:
             setup_config_template = Template(fp.read())
 
+        log.debug('Removing setup.cfg.template.')
         (staging_directory / 'setup.cfg.template').unlink()
 
         with open(staging_directory / 'setup.cfg', 'w') as fp:
             fp.write(setup_config_template.safe_substitute(project_name=program_options.project))
+
+        log.debug('Removing setup.cfg in .gitignore.')
+        with open(staging_directory / '.gitignore', 'r+') as fp:
+            lines = [line for line in fp if 'setup.cfg' not in line]
+            fp.seek(0)
+            fp.writelines(lines)
+            fp.truncate()
 
         log.debug(f'Moving staging directory to destination: {new_project_root.absolute()}')
         new_project_root.mkdir(parents=True, exist_ok=True)
@@ -141,7 +148,7 @@ def make_cl_argument_parser() -> argparse.ArgumentParser:
             'help': 'The name of your project.',
             'default': 'yourproject'
         },
-        ('--dev',): {
+        ('--dev', ): {
             'help': 'Prepares this project for development mode.',
             'action': 'store_true',
         },
