@@ -10,7 +10,7 @@ on:
 
 jobs:
   style-check:
-    name: Lint and type checks on Python ${{matrix.python-version}}
+    name: Lint on Python ${{matrix.python-version}} @${{matrix.os-image}}
     runs-on: ${{matrix.os-image}}
     strategy:
       matrix:
@@ -35,7 +35,7 @@ jobs:
           pipenv run mypy .
 
   test:
-    name: Test on Python ${{matrix.python-version}} with PyTest
+    name: Test on Python ${{matrix.python-version}} @${{matrix.os-image}}
     runs-on: ${{matrix.os-image}}
     strategy:
       matrix:
