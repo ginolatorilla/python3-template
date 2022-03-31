@@ -27,8 +27,8 @@ jobs:
           python-version: ${{matrix.python-version}}
       - name: Install PipEnv
         run: pip install pipenv
-      - name: Install development packages with pipenv
-        run: ./bootstrap.py
+      - name: Install development packages with PipEnv
+        run: pipenv install --dev
       - name: Lint with flake8 and mypy
         run: |
           pipenv run flake8
@@ -52,8 +52,8 @@ jobs:
           python-version: ${{matrix.python-version}}
       - name: Install PipEnv
         run: pip install pipenv
-      - name: Install development packages with pipenv
-        run: ./bootstrap.py
+      - name: Install development packages with PipEnv
+        run: pipenv install --dev
       - name: Test with pytest
         run: |
           pipenv run pytest
