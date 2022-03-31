@@ -31,7 +31,7 @@ jobs:
       - name: Install PipEnv
         run: pip install pipenv
       - name: Install development packages with PipEnv
-        run: ./bootstrap.py --dev
+        run: python3 ./bootstrap.py --dev
       - name: Lint with flake8 and mypy
         run: |
           pipenv run flake8
@@ -56,7 +56,7 @@ jobs:
       - name: Install PipEnv
         run: pip install pipenv
       - name: Install development packages with PipEnv
-        run: ./bootstrap.py --dev
+        run: python3 ./bootstrap.py --dev
       - name: Test with pytest
         run: |
           pipenv run pytest
