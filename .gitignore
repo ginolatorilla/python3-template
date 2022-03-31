@@ -4,3 +4,4 @@
 reqlib-metadata
 .coverage
 /setup.cfg
+build/
