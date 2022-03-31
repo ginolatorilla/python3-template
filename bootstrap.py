@@ -44,8 +44,8 @@ def main() -> int:
         log.debug('Creating virtual environment with Pipenv.')
         env = os.environ.copy()
         env['PIPENV_VENV_IN_PROJECT'] = '1'
-        subprocess.run(shlex.split('pipenv --python 3 --three'), env=env, cwd=local_project_dir)
-        subprocess.run(shlex.split('pipenv install --dev'), env=env, cwd=local_project_dir)
+        subprocess.run(shlex.split('pipenv --no-site-packages --python 3 --three'), env=env, cwd=local_project_dir)
+        subprocess.run(shlex.split('pipenv --no-site-packages install --dev'), env=env, cwd=local_project_dir)
         return 0
     else:
         if not program_options.project.isidentifier():
