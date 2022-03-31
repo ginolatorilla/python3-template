@@ -3,3 +3,5 @@
 *.egg-info
 reqlib-metadata
 .coverage
+/setup.cfg
+build/

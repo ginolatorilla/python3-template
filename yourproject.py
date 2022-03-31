@@ -4,14 +4,7 @@ If you think there's no need to describe this in detail, just remove this line a
 
 Copyright (c) 2021 Your Company's Name, or you
 '''
-import logging
-import submodule.main
-from typing import Union
 
 
-def main(required: int, *, optional: Union[int, None] = None) -> None:
-    logging.info(f'Hey, I got {required}.')
-    if optional:
-        logging.info(f'Hey, I also got {optional}.')
-
-    submodule.main.yourfunction()
+def main() -> None:
+    pass

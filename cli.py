@@ -18,8 +18,6 @@ try:
 except ImportError:
     PRETTY_FEATURE_ON = False
 
-import yourproject
-
 APP_NAME = Path(sys.argv[0]).stem
 log = logging.getLogger(APP_NAME)
 
@@ -39,7 +37,6 @@ def main() -> int:
     setup_logger(program_options.verbosity, program_options.no_color)
 
     # TODO: Continue here, and use program_options.
-    yourproject.main(program_options.required, optional=program_options.optional)
     return 0
 
 

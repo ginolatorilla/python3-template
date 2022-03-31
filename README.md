@@ -18,6 +18,7 @@ Inspired by [Kenneth Reitz's project template](https://github.com/kennethreitz/s
 - Test-driven development with PyTest, with mocking and code coverage support
 - Support for Pipenv with localised `virtualenv` directory
 - Ready-made template for CLI apps with argument parsing, subcommands, logging, and console colouring
+- Optional colour support for CLI with `[pretty]` flag.
 
 ## Requirements
 
@@ -27,19 +28,11 @@ Inspired by [Kenneth Reitz's project template](https://github.com/kennethreitz/s
 ## Quick Start
 
 ```bash
-python3 ./bootstrap.py
-pipenv run flake8
-pipenv run mypy
-pipenv run pytest
+python3 ./bootstrap.py --project your_new_project_name
 ```
 
-Make sure to rename the following files and directories
-
-- `submodule/**`
-- `tests/**`
-- `yourproject.py`
-
-Follow all of the TODOs embedded in these files:
+The bootstrapping script will create your new project's root directory. Follow all of the TODOs
+embedded in the newly-created files:
 
 - All `*.py` files.
 - `setup.cfg`
@@ -52,3 +45,13 @@ To know more, see the [setuptools documentation](https://setuptools.readthedocs.
 This project supports an optional feature for coloured console outputs with this install command: `pip install .[pretty]`.
 
 Finally, take ownership of this template project and replace this README!
+
+## Maintaining this Project
+
+```shell
+./bootstrap --dev
+```
+
+You may then continue working in the files local to this project.
+
+If you are going to update `setup.cfg`, make sure to reflect those changes in `setup.cfg.template`.
