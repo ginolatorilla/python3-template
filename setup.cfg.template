@@ -1,0 +1,62 @@
+[metadata]
+name = ${project_name}
+version = 0.0.0
+author = This is you. # TODO: Replace with yours.
+author_email = This is your email. # TODO: Replace with yours.
+description = This is Your Project. # TODO: Replace with yours.
+long_description = file: README.md
+url = A website, maybe your projects Git repo? # TODO: Replace with yours.
+project_urls =
+    Bug Tracker = This could be based from url, but maybe something like "${url}/issues". # TODO: Replace with yours.
+classifiers =
+    Programming Language :: Python :: 3
+    License :: OSI Approved :: MIT License # TODO: Change this depending on your licencing requirements.
+    Operating System :: OS Independent
+license = MIT # TODO: Change this to match what's in the classifier.
+
+[options]
+zip_safe = False
+packages = find:
+python_requires = >=3.6
+install_requires =
+    # TODO: List dependencies here as if it were requirements.txt
+
+[options.extras_require]
+pretty = rich
+
+[options.entry_points]
+console_scripts =
+    ${project_name} = cli:main
+
+[options.packages.find]
+exclude =
+    tests
+    tests/*
+
+[flake8]
+exclude = .venv
+max-line-length = 119
+
+[yapf]
+column_limit = 119
+
+[mypy]
+namespace_packages = true
+explicit_package_bases = true
+show_error_codes = true
+strict = true
+warn_unused_ignores = false
+exclude = '/(setup|bootstrap)\.py$'
+
+[mypy-setuptools.*]
+ignore_missing_imports = true
+
+[tool:pytest]
+addopts = --cov --cov-report=html
+
+[coverage:run]
+branch = true
+
+[coverage:report]
+omit = tests/*
+
