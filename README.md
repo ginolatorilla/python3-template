@@ -28,7 +28,7 @@ Inspired by [Kenneth Reitz's project template](https://github.com/kennethreitz/s
 ## Quick Start
 
 ```bash
-python3 ./bootstrap.py your_new_project_name
+python3 ./bootstrap.py --project your_new_project_name
 ```
 
 The bootstrapping script will create your new project's root directory. Follow all of the TODOs
@@ -45,3 +45,13 @@ To know more, see the [setuptools documentation](https://setuptools.readthedocs.
 This project supports an optional feature for coloured console outputs with this install command: `pip install .[pretty]`.
 
 Finally, take ownership of this template project and replace this README!
+
+## Maintaining this Project
+
+```shell
+./bootstrap --dev
+```
+
+You may then continue working in the files local to this project.
+
+If you are going to update `setup.cfg`, make sure to reflect those changes in `setup.cfg.template`.
