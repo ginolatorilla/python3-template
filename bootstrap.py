@@ -32,12 +32,12 @@ def main() -> int:
         log.debug('  --layout')
         log.debug('  --colour')
 
-        log.debug('Generating setup.cfg.')
-        with open(local_project_dir / 'setup.cfg.template', 'r') as fp:
-            setup_config_template = Template(fp.read())
+        log.debug('Generating pyproject.toml.')
+        with open(local_project_dir / 'pyproject.toml.template', 'r') as fp:
+            pyproject_template = Template(fp.read())
 
-        with open(local_project_dir / 'setup.cfg', 'w') as fp:
-            fp.write(setup_config_template.safe_substitute(project_name='yourproject'))
+        with open(local_project_dir / 'pyproject.toml', 'w') as fp:
+            fp.write(pyproject_template.safe_substitute(project_name='yourproject'))
 
         log.info('Re-initialising project directory: virtual environment and Git')
 
@@ -92,19 +92,19 @@ def main() -> int:
             log.debug(f'Renaming the package directory to {program_options.project}/.')
             (staging_directory / 'submodule').rename(staging_directory / f'{program_options.project}')
 
-        log.debug('Generating setup.cfg.')
-        with open(staging_directory / 'setup.cfg.template', 'r') as fp:
-            setup_config_template = Template(fp.read())
+        log.debug('Generating pyproject.toml.')
+        with open(staging_directory / 'pyproject.toml.template', 'r') as fp:
+            pyproject_template = Template(fp.read())
 
-        log.debug('Removing setup.cfg.template.')
-        (staging_directory / 'setup.cfg.template').unlink()
+        log.debug('Removing pyproject.toml.template.')
+        (staging_directory / 'pyproject.toml.template').unlink()
 
-        with open(staging_directory / 'setup.cfg', 'w') as fp:
-            fp.write(setup_config_template.safe_substitute(project_name=program_options.project))
+        with open(staging_directory / 'pyproject.toml', 'w') as fp:
+            fp.write(pyproject_template.safe_substitute(project_name=program_options.project))
 
-        log.debug('Removing setup.cfg in .gitignore.')
+        log.debug('Removing pyproject.toml in .gitignore.')
         with open(staging_directory / '.gitignore', 'r+') as fp:
-            lines = [line for line in fp if 'setup.cfg' not in line]
+            lines = [line for line in fp if 'pyproject.toml' not in line]
             fp.seek(0)
             fp.writelines(lines)
             fp.truncate()
@@ -136,7 +136,7 @@ def main() -> int:
         log.info(f'Congratulations, you may now work in your new project at: {new_project_root.absolute()}')
         log.info('Make sure to do the following afterwards:')
         log.info('  1. Update docstrings in every new *.py file.')
-        log.info('  2. Update all "# TODO" bits in setup.cfg.')
+        log.info('  2. Update all "# TODO" bits in pyproject.toml.')
         log.info('  3. Change LICENSE, if necessary.')
         log.info('  4. Update the README.md.')
         return 0

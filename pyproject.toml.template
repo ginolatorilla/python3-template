@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta:__legacy__"
+
+[project]
+name = "${project_name}"
+version = "0.0.0"
+authors = [{ name = "TODO: Your name", email = "your.email@example.com" }]
+description = "TODO: Short description"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+license = { text = "MIT" }
+requires-python = ">=3.6"
+dependencies = [] # TODO: List dependencies here using PEP-508 syntax
+
+[project.urls]
+Repository = "https://example.com/yourproject" # TODO: Replace
+
+[project.optional-dependencies]
+dev = [
+    "flake8",
+    "yapf",
+    "mypy",
+    "pytest",
+    "pytest-cov",
+    "pytest-mock",
+]
+
+[project.scripts]
+${project_name} = "cli:main"
+
+# Warning: Support for this is in beta phase.
+# See https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html#setuptools-specific-configuration
+[tool.setuptools]
+zip-safe = false
+
+# Warning: Support for this is in beta phase.
+# See https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html#setuptools-specific-configuration
+[tool.setuptools.packages.find]
+exclude = [
+    "tests/",
+    "tests/*"
+]
+
+[tool.yapf]
+column_limit = 119
+
+[tool.pytest.ini_options]
+addopts = ["--cov", "--cov-report=term", "--cov-fail-under=95"]
+testpaths = ["tests/"]
+log_format = "%(asctime)s %(levelname)s %(message)s"
+log_date_format = "%Y-%m-%d %H:%M:%S"
+log_cli = true
+log_cli_level = "DEBUG"
+
+[tool.coverage.run]
+branch = true
+omit = ["tests/*"]
