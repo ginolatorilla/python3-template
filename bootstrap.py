@@ -44,7 +44,7 @@ def main() -> int:
         log.debug('Creating virtual environment with Pipenv.')
         env = os.environ.copy()
         env['PIPENV_VENV_IN_PROJECT'] = '1'
-        subprocess.run(shlex.split('pipenv --no-site-packages --python 3 --three'), env=env, cwd=local_project_dir)
+        subprocess.run(shlex.split('pipenv --no-site-packages --python 3'), env=env, cwd=local_project_dir)
         subprocess.run(shlex.split('pipenv --no-site-packages install --dev'), env=env, cwd=local_project_dir)
         return 0
     else:
@@ -118,7 +118,7 @@ def main() -> int:
         log.debug('Creating virtual environment with Pipenv.')
         env = os.environ.copy()
         env['PIPENV_VENV_IN_PROJECT'] = '1'
-        subprocess.run(shlex.split('pipenv --python 3 --three'), env=env, cwd=new_project_root)
+        subprocess.run(shlex.split('pipenv --python 3'), env=env, cwd=new_project_root)
         subprocess.run(shlex.split('pipenv uninstall yourproject'), env=env, cwd=new_project_root)
         if program_options.color:
             subprocess.run(shlex.split('pipenv install --editable .[pretty] --dev'), env=env, cwd=new_project_root)
