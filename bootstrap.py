@@ -81,7 +81,7 @@ def main() -> int:
 
         if program_options.layout == 'module':
             log.debug('Removing the package directory because you chose "module" as the project layout.')
-            shutil.rmtree(staging_directory / 'submodule')
+            shutil.rmtree(staging_directory / 'src')
 
             log.debug(f'Renaming the module to {program_options.project}.py.')
             (staging_directory / 'yourproject.py').rename(staging_directory / f'{program_options.project}.py')
@@ -90,7 +90,7 @@ def main() -> int:
             (staging_directory / 'yourproject.py').unlink()
 
             log.debug(f'Renaming the package directory to {program_options.project}/.')
-            (staging_directory / 'submodule').rename(staging_directory / f'{program_options.project}')
+            (staging_directory / 'src/yourproject').rename(staging_directory / f'src/{program_options.project}')
 
         log.debug('Generating pyproject.toml.')
         with open(staging_directory / 'pyproject.toml.template', 'r') as fp:
