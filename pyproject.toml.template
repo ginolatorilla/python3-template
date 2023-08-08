@@ -46,14 +46,6 @@ ${project_name} = "cli:main"
 [tool.setuptools]
 zip-safe = false
 
-# Warning: Support for this is in beta phase.
-# See https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html#setuptools-specific-configuration
-[tool.setuptools.packages.find]
-exclude = [
-    "tests/",
-    "tests/*"
-]
-
 [tool.yapf]
 column_limit = 119
 
