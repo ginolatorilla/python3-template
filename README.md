@@ -16,12 +16,10 @@ Inspired by [Kenneth Reitz's project template](https://github.com/kennethreitz/s
 - Linting with `flake8` and `mypy`
 - Formatting with `yapf`
 - Test-driven development with PyTest, with mocking and code coverage support
-- Ready-made template for CLI apps with argument parsing, subcommands, logging, and console colouring
-- Optional colour support for CLI with `[pretty]` flag.
 
 ## Requirements
 
-- Python 3.6 or better
+- Python 3.8 or better
 - [Pipenv](https://pipenv.readthedocs.io/en/latest/)
 
 ## Quick Start

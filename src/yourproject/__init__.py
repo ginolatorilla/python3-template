@@ -6,4 +6,3 @@ Copyright (c) 2021 Your Company's Name, or you
 '''
 
 from yourproject.main import yourfunction  # noqa: F401
-from yourproject.cli import main as cli_main  # noqa: F401
