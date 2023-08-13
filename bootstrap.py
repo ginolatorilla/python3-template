@@ -31,7 +31,6 @@ def main() -> int:
         log.debug('  --project')
         log.debug('  --directory')
         log.debug('  --layout')
-        log.debug('  --colour')
 
         log.debug('Generating pyproject.toml.')
         with open(local_project_dir / 'pyproject.toml.template', 'r') as fp:
@@ -176,11 +175,6 @@ def make_cl_argument_parser() -> argparse.ArgumentParser:
             '"package": The project will be a package (a directory with __init__.py)',
             'choices': {'module', 'package'},
             'default': 'module'
-        },
-        ('-c', '--color', '--colour'): {
-            'help': 'Enable rich text formatting support in the cli.'
-            '"package": The project will be a package (a directory with __init__.py)',
-            'action': 'store_true',
         },
     }
 

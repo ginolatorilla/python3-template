@@ -38,8 +38,6 @@ Consider changing the project licence with yours, and adjust the licencing metad
 This project can be installed to your system or virtual environments via `pip install .` or `./setup.py install`.
 To know more, see the [setuptools documentation](https://setuptools.readthedocs.io/en/latest/userguide/index.html).
 
-This project supports an optional feature for coloured console outputs with this install command: `pip install .[pretty]`.
-
 Finally, take ownership of this template project and replace this README!
 
 ## Maintaining this Project
