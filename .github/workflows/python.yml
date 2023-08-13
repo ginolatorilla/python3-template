@@ -8,55 +8,20 @@ on:
     branches:
       - main
 
-env:
-  PIPENV_VENV_IN_PROJECT: 1
-
 jobs:
-  style-check:
-    name: Lint on Python ${{matrix.python-version}} @${{matrix.os-image}}
-    runs-on: ${{matrix.os-image}}
+  bootstrap-test:
+    name: Bootstrap on Python ${{matrix.python-version}} @${{matrix.os-image}}
     strategy:
       matrix:
-        os-image: ["ubuntu-latest", "windows-latest", "macos-latest"]
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
-        include:
-          - os-image: ubuntu-latest
-            python-version: "3.6"
+        os-image: ["ubuntu-latest", "macos-latest"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
+        bootstrap-args: ["--layout=module", "--layout=package", "--dev"]
+    runs-on: ${{matrix.os-image}}
     steps:
       - uses: actions/checkout@v1
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: ${{matrix.python-version}}
-      - name: Install PipEnv
-        run: pip install pipenv
-      - name: Install development packages with PipEnv
-        run: python3 ./bootstrap.py --dev
-      - name: Lint with flake8 and mypy
-        run: |
-          pipenv run flake8
-          pipenv run mypy .
-
-  test:
-    name: Test on Python ${{matrix.python-version}} @${{matrix.os-image}}
-    runs-on: ${{matrix.os-image}}
-    strategy:
-      matrix:
-        os-image: ["ubuntu-latest", "windows-latest", "macos-latest"]
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
-        include:
-          - os-image: ubuntu-latest
-            python-version: "3.6"
-    steps:
-      - uses: actions/checkout@v1
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{matrix.python-version}}
-      - name: Install PipEnv
-        run: pip install pipenv
-      - name: Install development packages with PipEnv
-        run: python3 ./bootstrap.py --dev
-      - name: Test with pytest
-        run: |
-          pipenv run pytest
+      - name: Run bootstrapper
+        run: python3 ./bootstrap.py ${{matrix.bootstrap-args}} -d .test

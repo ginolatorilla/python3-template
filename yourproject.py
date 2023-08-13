@@ -6,5 +6,5 @@ Copyright (c) 2021 Your Company's Name, or you
 '''
 
 
-def main() -> None:
-    pass
+def yourfunction() -> int:
+    return 0
