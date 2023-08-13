@@ -36,9 +36,6 @@ dev = [
     "pytest-mock",
 ]
 
-[project.scripts]
-yourproject = "yourproject.cli_main" # TODO: Replace or remove if you don't want a console script.
-
 # Warning: Support for this is in beta phase.
 # See https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html#setuptools-specific-configuration
 [tool.setuptools]
@@ -59,3 +56,10 @@ log_cli_level = "DEBUG"
 [tool.coverage.run]
 branch = true
 omit = ["tests/*"]
+
+[tool.mypy]
+exclude = """(?x)(
+    site-packages
+    | node_modules
+    | tests
+  )"""
