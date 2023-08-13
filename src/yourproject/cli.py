@@ -153,7 +153,7 @@ def make_cl_subcommand_parser() -> argparse.ArgumentParser:
     # TODO: Add/remove command line arguments in this dictionary.
     # The 'keys' are positional arguments to argparse.ArgumentParser.add_argument and
     # the 'values' are the keyword arguments.
-    common_arguments_spec = {
+    common_arguments_spec: Dict[Tuple[str, ...], Any] = {
         (
             '-v',
             '--verbose',
@@ -170,12 +170,12 @@ def make_cl_subcommand_parser() -> argparse.ArgumentParser:
             'help': 'Disable colouring of console output.',
             'action': 'store_true'
         },
-    }  # type: Dict[Tuple[str, ...], Any]
+    }
 
     # TODO: Add/remove subcommands here.
     # The 'keys' are positional arguments to argparse.ArgumentParser.add_subparsers and
     # the 'values' are equivalent to argparse.ArgumentParser.add_argument.
-    subcommands_spec = {
+    subcommands_spec: Dict[str, Dict[str, Any]] = {
         'subcommand': {
             'description': 'This subcommand does this.',
             'arguments_spec': {
@@ -199,12 +199,12 @@ def make_cl_subcommand_parser() -> argparse.ArgumentParser:
             },
             'entry_point': subcommand_main
         }
-    }  # type: Dict[str, Dict[str, Any]]
+    }
 
-    root_parser = argparse.ArgumentParser(
-        description=__doc__,
-        formatter_class=type('Formatter',
-                             (argparse.RawDescriptionHelpFormatter, argparse.ArgumentDefaultsHelpFormatter), {}))
+    class CustomFormatter(argparse.RawDescriptionHelpFormatter, argparse.ArgumentDefaultsHelpFormatter):
+        pass
+
+    root_parser = argparse.ArgumentParser(description=__doc__, formatter_class=CustomFormatter)
     root_parser.set_defaults(func=lambda _: root_parser.print_help())
 
     subparsers = root_parser.add_subparsers(description='', dest='subcommand')

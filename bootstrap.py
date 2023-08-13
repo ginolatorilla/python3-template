@@ -45,6 +45,7 @@ def main() -> int:
         log.debug('Creating virtual environment.')
         venv_dir = Path('.venv')
         venv.create(venv_dir.absolute(), with_pip=True)
+        subprocess.run([(venv_dir / 'bin/python').absolute(), *shlex.split('-m pip install --upgrade pip')])
 
         log.debug('Installing project as editable package.')
         subprocess.run([(venv_dir / 'bin/python').absolute(), *shlex.split('-m pip install --editable .[dev]')])

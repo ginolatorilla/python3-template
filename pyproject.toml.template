@@ -37,7 +37,7 @@ dev = [
 ]
 
 [project.scripts]
-${project_name} = "cli:main"
+yourproject = "yourproject.cli_main" # TODO: Replace or remove if you don't want a console script.
 
 # Warning: Support for this is in beta phase.
 # See https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html#setuptools-specific-configuration
@@ -48,7 +48,8 @@ zip-safe = false
 column_limit = 119
 
 [tool.pytest.ini_options]
-addopts = ["--cov", "--cov-report=term", "--cov-fail-under=95"]
+addopts = ["--cov", "--cov-report=term"]
+# addopts = ["--cov", "--cov-report=term", "--cov-fail-under=95"] # TODO: Use this to fail tests with low coverage.
 testpaths = ["tests/"]
 log_format = "%(asctime)s %(levelname)s %(message)s"
 log_date_format = "%Y-%m-%d %H:%M:%S"

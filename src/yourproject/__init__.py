@@ -5,4 +5,5 @@ If you think there's no need to describe this in detail, just remove this line a
 Copyright (c) 2021 Your Company's Name, or you
 '''
 
-# Intentionally left blank.
+from yourproject.main import yourfunction  # noqa: F401
+from yourproject.cli import main as cli_main  # noqa: F401
