@@ -1,7 +1,7 @@
-# Gino's Python with pipenv project template
+# Gino's Python project template
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ginolatorilla/python3-pipenv-template/python-linux?label=ubuntu-latest&style=plastic)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ginolatorilla/python3-pipenv-template/python-macos?label=macos-latest&style=plastic)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/ginolatorilla/python3-pipenv-template/python.yml?label=ubuntu-latest&style=plastic&branch=main)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/ginolatorilla/python3-pipenv-template/python.yml?label=macos-latest&style=plastic&branch=main)
 
 A Python3 project template with pipenv to hande dependencies.
 
@@ -19,7 +19,6 @@ Inspired by [Kenneth Reitz's project template](https://github.com/kennethreitz/s
 ## Requirements
 
 - Python 3.8 or better
-- [Pipenv](https://pipenv.readthedocs.io/en/latest/)
 
 ## Quick Start
 
