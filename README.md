@@ -10,8 +10,8 @@ Inspired by [Kenneth Reitz's project template](https://github.com/kennethreitz/s
 
 ## Features
 
-- Support for Python 3.6, up to 3.10
-- Support for Linux, Windows, and MacOS (no support for 3.6 in MacOS)
+- Support for Python 3.8 and greater
+- Support for Linux, Windows, and MacOS
 - GitHub workflow templates
 - Linting with `flake8` and `mypy`
 - Formatting with `yapf`

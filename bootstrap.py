@@ -49,7 +49,7 @@ def main() -> int:
         log.debug('Installing project as editable package.')
         subprocess.run([(venv_dir / 'bin/python').absolute(), *shlex.split('-m pip install --editable .[dev]')])
 
-        log.info(f'Congratulations, you may now develop in this project')
+        log.info('Congratulations, you may now develop in this project')
         log.info('Make sure to run the following afterwards:')
         log.info(f'    source {venv_dir / "bin/activate"}')
         log.info('(Or whichever activation script is there for your shell.)')
@@ -150,7 +150,7 @@ def main() -> int:
 
 
 def make_cl_argument_parser() -> argparse.ArgumentParser:
-    arguments_spec = {
+    arguments_spec: Dict[Tuple[str, ...], Any] = {
         ('--project', ): {
             'help': 'The name of your project.',
             'default': 'yourproject'
@@ -180,12 +180,12 @@ def make_cl_argument_parser() -> argparse.ArgumentParser:
             '"package": The project will be a package (a directory with __init__.py)',
             'action': 'store_true',
         },
-    }  # type: Dict[Tuple[str, ...], Any]
+    }
 
-    ap = argparse.ArgumentParser(
-        description=__doc__,
-        formatter_class=type('Formatter',
-                             (argparse.RawDescriptionHelpFormatter, argparse.ArgumentDefaultsHelpFormatter), {}))
+    class CustomFormatter(argparse.RawDescriptionHelpFormatter, argparse.ArgumentDefaultsHelpFormatter):
+        pass
+
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=CustomFormatter)
     for args, kwargs in arguments_spec.items():
         ap.add_argument(*args, **kwargs)
     return ap
