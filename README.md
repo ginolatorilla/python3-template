@@ -16,7 +16,6 @@ Inspired by [Kenneth Reitz's project template](https://github.com/kennethreitz/s
 - Linting with `flake8` and `mypy`
 - Formatting with `yapf`
 - Test-driven development with PyTest, with mocking and code coverage support
-- Support for Pipenv with localised `virtualenv` directory
 - Ready-made template for CLI apps with argument parsing, subcommands, logging, and console colouring
 - Optional colour support for CLI with `[pretty]` flag.
 
@@ -35,7 +34,7 @@ The bootstrapping script will create your new project's root directory. Follow a
 embedded in the newly-created files:
 
 - All `*.py` files.
-- `setup.cfg`
+- `pyproject.toml`
 
 Consider changing the project licence with yours, and adjust the licencing metadata in `setup.cfg`.
 
@@ -50,8 +49,9 @@ Finally, take ownership of this template project and replace this README!
 
 ```shell
 ./bootstrap --dev
+source .venv/bin/activate
 ```
 
 You may then continue working in the files local to this project.
 
-If you are going to update `setup.cfg`, make sure to reflect those changes in `setup.cfg.template`.
+If you are going to update `pyproject.toml`, make sure to reflect those changes in `pyproject.toml.template`.

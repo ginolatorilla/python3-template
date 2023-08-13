@@ -14,6 +14,7 @@ from pathlib import Path
 from string import Template
 from tempfile import mkdtemp
 from typing import Any, Dict, Tuple
+import venv
 
 APP_NAME = Path(sys.argv[0]).stem
 log = logging.getLogger(APP_NAME)
@@ -41,18 +42,24 @@ def main() -> int:
 
         log.info('Re-initialising project directory: virtual environment and Git')
 
-        log.debug('Creating virtual environment with Pipenv.')
-        env = os.environ.copy()
-        env['PIPENV_VENV_IN_PROJECT'] = '1'
-        subprocess.run(shlex.split('pipenv --no-site-packages --python 3'), env=env, cwd=local_project_dir)
-        subprocess.run(shlex.split('pipenv --no-site-packages install --dev'), env=env, cwd=local_project_dir)
+        log.debug('Creating virtual environment.')
+        venv_dir = Path('.venv')
+        venv.create(venv_dir.absolute(), with_pip=True)
+
+        log.debug('Installing project as editable package.')
+        subprocess.run([(venv_dir / 'bin/python').absolute(), *shlex.split('-m pip install --editable .[dev]')])
+
+        log.info(f'Congratulations, you may now develop in this project')
+        log.info('Make sure to run the following afterwards:')
+        log.info(f'    source {venv_dir / "bin/activate"}')
+        log.info('(Or whichever activation script is there for your shell.)')
         return 0
     else:
         if not program_options.project.isidentifier():
             log.error(f'{program_options.project} is not a valid Python identifier.')
             return 1
 
-        new_project_root = Path(program_options.destination) / program_options.project
+        new_project_root: Path = Path(program_options.destination) / program_options.project
         if new_project_root.exists():
             log.error(f'The project destination directory exists: {new_project_root.absolute()}.')
             return 1
@@ -115,20 +122,19 @@ def main() -> int:
 
         log.info('Re-initialising project directory: virtual environment and Git')
 
-        log.debug('Creating virtual environment with Pipenv.')
-        env = os.environ.copy()
-        env['PIPENV_VENV_IN_PROJECT'] = '1'
-        subprocess.run(shlex.split('pipenv --python 3'), env=env, cwd=new_project_root)
-        subprocess.run(shlex.split('pipenv uninstall yourproject'), env=env, cwd=new_project_root)
-        if program_options.color:
-            subprocess.run(shlex.split('pipenv install --editable .[pretty] --dev'), env=env, cwd=new_project_root)
-        else:
-            subprocess.run(shlex.split('pipenv install --editable . --dev'), env=env, cwd=new_project_root)
+        log.debug('Creating virtual environment.')
+        venv_dir = new_project_root / '.venv'
+        venv.create(venv_dir.absolute(), with_pip=True)
+
+        log.debug('Installing project as editable package.')
+        subprocess.run([(venv_dir / 'bin/python').absolute(), *shlex.split('-m pip install --editable .[dev]')],
+                       cwd=new_project_root)
 
         log.debug('Running all tests.')
-        subprocess.run(shlex.split('pipenv run mypy .'), env=env, cwd=new_project_root)
-        subprocess.run(shlex.split('pipenv run flake8'), env=env, cwd=new_project_root)
-        subprocess.run(shlex.split('pipenv run pytest --cov-report=term'), env=env, cwd=new_project_root)
+        subprocess.run([(venv_dir / 'bin/python').absolute(), *shlex.split('-m mypy .')], cwd=new_project_root)
+        subprocess.run([(venv_dir / 'bin/python').absolute(), *shlex.split('-m flake8 .')], cwd=new_project_root)
+        subprocess.run([(venv_dir / 'bin/python').absolute(), *shlex.split('-m pytest --no-cov')],
+                       cwd=new_project_root)
 
         log.debug('Re-initialising Git repository')
         subprocess.run(shlex.split(f'git -C {new_project_root} init'))
@@ -136,9 +142,10 @@ def main() -> int:
         log.info(f'Congratulations, you may now work in your new project at: {new_project_root.absolute()}')
         log.info('Make sure to do the following afterwards:')
         log.info('  1. Update docstrings in every new *.py file.')
-        log.info('  2. Update all "# TODO" bits in pyproject.toml.')
+        log.info('  2. Update all "TODO" bits in pyproject.toml.')
         log.info('  3. Change LICENSE, if necessary.')
         log.info('  4. Update the README.md.')
+        os.chdir(new_project_root.absolute())
         return 0
 
 
